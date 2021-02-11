@@ -37,9 +37,12 @@ for(j in 2:ncol(logmap)) {
 #plot.new()
 #to use ggplot I need to convert the dataframe to long format:
 logmap_long <- gather_(logmap, "lambda", "value", colnames(logmap[2:ncol(logmap)]))
+#logmap_long <- arrange(logmap_long, x, .by_group = TRUE)
 
-print(ggplot(logmap_long, aes(x,value)) 
-      + geom_point(aes(colour=lambda), shape=1) + scale_shape(solid=FALSE)
-      + geom_line(aes(colour=lambda))
-      
-      + scale_y_continuous(c(0.1)))
+p <- ggplot(logmap_long, aes(x,value, frame=lambda)) + geom_point(aes(colour=lambda)) 
+
+      #+ geom_point(aes(colour=lambda), shape=1) + scale_shape(solid=FALSE) 
+      #+ scale_y_continuous(c(0.1))
+
+fig <- ggplotly(p)
+print(fig)
